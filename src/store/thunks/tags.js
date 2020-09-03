@@ -3,8 +3,10 @@ import { Creators } from '../ducks/tags';
 
 export const tagThunks = {
   getAll: (dispatch) => {
+    dispatch(Creators.setLoading(true));
     getAll().then((tags) => {
       dispatch(Creators.getAll(tags));
+      dispatch(Creators.setLoading(false));
     });
   },
   addTag: (dispatch, payload) => {

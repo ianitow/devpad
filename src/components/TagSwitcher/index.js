@@ -8,13 +8,16 @@ import DialogAlert, { options } from '../DialogAlert';
 import ColorPicker from '../ColorPicker';
 import Tag from '../Tag';
 import { useSelector } from 'react-redux';
+import Loading from '../Loading';
 
 export default ({ onTagCreated, onTagIsClicked }, props) => {
   const tagsAlreadySelected = useSelector((state) => state.tagsReducer);
+  const isLoading = useSelector((state) => state.tagsReducer.loading);
+
   const [colorPicker, setColorPicker] = React.useState('#000');
   const [isColorPickerActive, setIsColorPickerActive] = React.useState(false);
   const [tagInput, setTagInput] = React.useState('');
-
+  console.log(isLoading);
   function createNewTag(tagName) {
     let isExists = tagsAlreadySelected.tags.some(
       (value) => tagName.toLowerCase() === value.name.toLowerCase(),
@@ -38,60 +41,66 @@ export default ({ onTagCreated, onTagIsClicked }, props) => {
     <>
       <DialogAlert />
       <TagSwitcher>
-        <div className="inputExternal">
-          <div className="inputContainer">
-            <input
-              type="text"
-              value={tagInput}
-              placeholder="Criar tag"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  return createNewTag(tagInput);
-                }
+        {!isLoading ? (
+          <>
+            <div className="inputExternal">
+              <div className="inputContainer">
+                <input
+                  type="text"
+                  value={tagInput}
+                  placeholder="Criar tag"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      return createNewTag(tagInput);
+                    }
 
-                setIsColorPickerActive(false);
-              }}
-              onFocus={() => {
-                setIsColorPickerActive(false);
-              }}
-              onChange={(event) => setTagInput(event.target.value)}
-            />
-            <ColorPicker
-              defaultColor={colorPicker}
-              onColorSelected={(color) => {
-                setColorPicker(color);
-              }}
-              isColorPickerActive={isColorPickerActive}
-              setIsColorPickerActive={setIsColorPickerActive}
-            />
-          </div>
-          <div
-            className="iconContainer"
-            onClick={() => createNewTag(tagInput || '')}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
-        </div>
-
-        <div className="tagContainer">
-          {tagsAlreadySelected.tags &&
-            tagsAlreadySelected.tags.map(({ name, color, selected }) => {
-              return (
-                <Tag
-                  key={name}
-                  clickable
-                  name={name}
-                  color={color}
-                  selected={selected}
-                  onClick={() => {
-                    onTagIsClicked(name, color, selected);
+                    setIsColorPickerActive(false);
                   }}
-                  outlined
-                  dense
+                  onFocus={() => {
+                    setIsColorPickerActive(false);
+                  }}
+                  onChange={(event) => setTagInput(event.target.value)}
                 />
-              );
-            })}
-        </div>
+                <ColorPicker
+                  defaultColor={colorPicker}
+                  onColorSelected={(color) => {
+                    setColorPicker(color);
+                  }}
+                  isColorPickerActive={isColorPickerActive}
+                  setIsColorPickerActive={setIsColorPickerActive}
+                />
+              </div>
+              <div
+                className="iconContainer"
+                onClick={() => createNewTag(tagInput || '')}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </div>
+            </div>
+
+            <div className="tagContainer">
+              {tagsAlreadySelected.tags &&
+                tagsAlreadySelected.tags.map(({ name, color, selected }) => {
+                  return (
+                    <Tag
+                      key={name}
+                      clickable
+                      name={name}
+                      color={color}
+                      selected={selected}
+                      onClick={() => {
+                        onTagIsClicked(name, color, selected);
+                      }}
+                      outlined
+                      dense
+                    />
+                  );
+                })}
+            </div>
+          </>
+        ) : (
+          <Loading />
+        )}
       </TagSwitcher>
     </>
   );

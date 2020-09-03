@@ -2,10 +2,12 @@ export const Types = {
   ADD: 'tags/ADD',
   DELETE: 'tags/DELETE',
   GET_ALL: 'tags/GET_ALL',
+  SET_LOADING: 'tags/LOADING',
 };
 
 const INITIAL_STATE = {
   tags: [],
+  loading: false,
 };
 
 export default function tags(state = INITIAL_STATE, action) {
@@ -14,8 +16,9 @@ export default function tags(state = INITIAL_STATE, action) {
       const { name, _id, color } = action.payload;
       const oldValues = { ...state };
       oldValues.tags.push({ name, _id, color, selected: false });
-      console.log('reducer ', oldValues);
       return oldValues;
+    case Types.SET_LOADING:
+      return { ...state, loading: action.payload };
     case Types.GET_ALL:
       console.log(action);
       return { tags: [...action.payload] };
@@ -38,5 +41,9 @@ export const Creators = {
   getAll: (tags) => ({
     type: Types.GET_ALL,
     payload: tags,
+  }),
+  setLoading: (bool) => ({
+    type: Types.SET_LOADING,
+    payload: bool,
   }),
 };

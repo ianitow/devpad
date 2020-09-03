@@ -111,7 +111,7 @@ function CreateNote({ add }) {
                 ? 'Enter the name of your redirect'
                 : 'Enter the name of your note...'
             }
-            maxlength="150"
+            maxLength="70"
           />
         </TitleInput>
 
@@ -157,7 +157,4 @@ function CreateNote({ add }) {
     </>
   );
 }
-const mapDispatchToProps = (dispatch) => {
-  bindActionCreators(CardsActions, dispatch);
-};
-export default connect(null, mapDispatchToProps)(CreateNote);
+export default CreateNote;
