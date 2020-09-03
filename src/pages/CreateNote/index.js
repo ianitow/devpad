@@ -77,6 +77,9 @@ function CreateNote({ add }) {
     }
   }
 
+  function handleCloseButton() {
+    return setIsVisibleTag(!isVisibleTag);
+  }
   return (
     <>
       <DialogAlert />
@@ -129,6 +132,7 @@ function CreateNote({ add }) {
                 onTagCreated={handleTagCreated}
                 onTagIsClicked={handleTag}
                 tagsAlreadySelected={allValues}
+                onCloseButton={handleCloseButton}
               />
             )}
           </div>

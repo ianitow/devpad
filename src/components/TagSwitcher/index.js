@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagSwitcher } from './style';
+import { TagSwitcher, Close } from './style';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import ColorPicker from '../ColorPicker';
 import Tag from '../Tag';
 import { useSelector } from 'react-redux';
 
-export default ({ onTagCreated, onTagIsClicked }, props) => {
+export default ({ onTagCreated, onTagIsClicked, onCloseButton }, props) => {
   const tagsAlreadySelected = useSelector((state) => state.tagsReducer);
   const [colorPicker, setColorPicker] = React.useState('#000');
   const [isColorPickerActive, setIsColorPickerActive] = React.useState(false);
@@ -39,6 +39,7 @@ export default ({ onTagCreated, onTagIsClicked }, props) => {
       <DialogAlert />
       <TagSwitcher>
         <div className="inputExternal">
+          <Close onClick={() => onCloseButton()} />
           <div className="inputContainer">
             <input
               type="text"
