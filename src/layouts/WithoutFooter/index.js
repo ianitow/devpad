@@ -7,7 +7,6 @@ function Default({ children, name, icon, to }) {
     <Container>
       <Header name={name} icon={icon} to={to} />
       <Body>{children}</Body>
-      <Footer />
     </Container>
   );
 }

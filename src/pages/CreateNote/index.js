@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Switch from 'react-switch';
 import DialogAlert, { options } from '../../components/DialogAlert';
 import TagSwitcher from '../../components/TagSwitcher';
+import PublishTab from '../../components/PublishTab';
+import { Creators as EditorCreators } from '../../store/ducks/editor';
 
 import {
   Container,
@@ -20,16 +22,19 @@ import Tag from '../../components/Tag';
 import Editor from '../../components/Editor';
 import { tagThunks } from '../../store/thunks/tags';
 function CreateNote({ add }) {
-  const [type, setType] = useState(false);
   const allValues = useSelector((state) => state.tagsReducer.tags);
-  const [inputURL, setInputURL] = useState('');
-  const [titleCard, setTitleCard] = useState('');
-  const [tagsSelected, setTagsSelected] = useState([]);
-  const [isVisibleTag, setIsVisibleTag] = useState(false);
+  const editorState = useSelector((state) => state.editorReducer);
 
+  const titleCard = editorState.title;
+  const type = editorState.isRedirect;
+  const inputURL = editorState.url;
+  const tagsSelected = editorState.tags;
+  const [isVisibleTag, setIsVisibleTag] = useState(false);
   const dispatch = useDispatch();
+  //Efects
   React.useEffect(() => {
     tagThunks.getAll(dispatch);
+
     if (tagsSelected.length === 0) {
       allValues.map((item) => {
         item.selected = false;
@@ -38,6 +43,16 @@ function CreateNote({ add }) {
     }
   }, []);
 
+  //Handles
+  function handleCancelClick() {
+    console.log(editorState);
+  }
+  function handleSaveButton() {
+    console.log(editorState);
+  }
+  function handleCloseButton() {
+    return setIsVisibleTag(!isVisibleTag);
+  }
   function handleTag(name, color, selected) {
     const o = allValues.map((item) => {
       if (item.name === name) {
@@ -48,7 +63,7 @@ function CreateNote({ add }) {
     });
     const all = o.filter((item) => (item.selected ? item : false));
 
-    setTagsSelected([...all]);
+    dispatch(EditorCreators.SET_NOTE({ ...editorState, tags: [...all] }));
   }
 
   async function handleTagCreated(payload) {
@@ -67,15 +82,13 @@ function CreateNote({ add }) {
   function submitNote() {
     if (!type) {
       if (validateUrl(inputURL)) {
+        console.log(editorState);
       } else {
         toast.error('Você informou uma url inválida.', options);
       }
     }
   }
 
-  function handleCloseButton() {
-    return setIsVisibleTag(!isVisibleTag);
-  }
   return (
     <>
       <DialogAlert />
@@ -83,7 +96,14 @@ function CreateNote({ add }) {
         <Caption>
           <h2>Nova Anotação</h2>{' '}
           <Switch
-            onChange={() => setType(!type)}
+            onChange={() =>
+              dispatch(
+                EditorCreators.SET_NOTE({
+                  ...editorState,
+                  isRedirect: !editorState.isRedirect,
+                }),
+              )
+            }
             checked={!type}
             checkedIcon={false}
             uncheckedIcon={false}
@@ -102,9 +122,17 @@ function CreateNote({ add }) {
         </Caption>
 
         <TitleInput>
-          <textarea
+          <input
+            type="text"
             value={titleCard}
-            onChange={({ target }) => setTitleCard(target.value)}
+            onChange={({ target }) =>
+              dispatch(
+                EditorCreators.SET_NOTE({
+                  ...editorState,
+                  title: target.value,
+                }),
+              )
+            }
             placeholder={
               type
                 ? 'Enter the name of your redirect'
@@ -141,7 +169,14 @@ function CreateNote({ add }) {
                 <input
                   type="text"
                   value={inputURL}
-                  onChange={({ target }) => setInputURL(target.value)}
+                  onChange={({ target }) =>
+                    dispatch(
+                      EditorCreators.SET_NOTE({
+                        ...editorState,
+                        url: target.value,
+                      }),
+                    )
+                  }
                   placeholder="Enter a url..."
                 />
                 <button type="submit" onClick={submitNote}>
@@ -154,6 +189,7 @@ function CreateNote({ add }) {
           <>{!isVisibleTag && <Editor />}</>
         )}
       </Container>
+      <PublishTab />
     </>
   );
 }

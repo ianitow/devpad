@@ -36,7 +36,7 @@ export const TitleInput = styled.div`
   margin-top: 12px;
   width: auto;
 
-  textarea {
+  input {
     font-family: Roboto, sans-serif;
     font-size: 1.8rem;
     height: 70px;
@@ -48,10 +48,7 @@ export const TitleInput = styled.div`
     border: 0px;
     color: #444;
     overflow-y: hidden;
-    resize: none
-    ::placeholder {
-      color: #c2c2c2;
-    }
+    resize: none;
   }
 `;
 

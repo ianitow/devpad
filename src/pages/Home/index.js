@@ -6,12 +6,14 @@ import { noteThunks } from '../../store/thunks/notes';
 import TagFilter from '../../components/TagFilter';
 import CardList from '../../components/CardList';
 import Search from '../../components/Search/index';
+import { Creators as EditorCreators } from '../../store/ducks/editor';
 
 export const Home = () => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     noteThunks.list(dispatch);
+    dispatch(EditorCreators.CLEAR_ALL());
   }, []);
 
   const filtered = useSelector((state) => state.searchReducer.filtered);

@@ -18,11 +18,15 @@ import DragDrop from 'editorjs-drag-drop';
 import Undo from 'editorjs-undo';
 
 import { Container } from './style';
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators as EditorCreators } from '../../store/ducks/editor';
 export default () => {
   const editor = useRef(null);
+  const dispatch = useDispatch();
   const [intervalID, setIntervalID] = React.useState();
-  const onDataReceived = (data) => {
-    console.log(JSON.stringify(data));
+  const editorState = useSelector((state) => state.editorReducer);
+  const onDataReceived = async (data) => {
+    await dispatch(EditorCreators.SET_NOTE({ ...editorState, content: data }));
   };
   React.useEffect(() => () => {
     clearInterval(intervalID);
@@ -30,6 +34,8 @@ export default () => {
   return (
     <Container id="editorjs-container">
       <Editor
+        ref={editor}
+        data={editorState.content}
         holder="editorjs-container"
         placeholder="Comece a escrever algo..."
         onData={(data) => onDataReceived(data)}
@@ -65,9 +71,10 @@ export default () => {
         onReady={() => {
           setIntervalID(
             setTimeout(() => {
-              while (!editor) {
+              if (editor) {
                 new Undo({ ...editor.current });
                 new DragDrop(editor.current.editor);
+                clearInterval(intervalID);
               }
             }, 2000),
           );
