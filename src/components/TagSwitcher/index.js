@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagSwitcher } from './style';
+import { TagSwitcher, Close } from './style';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
@@ -31,9 +31,8 @@ export default ({ onTagCreated, onTagIsClicked, onCloseButton }, props) => {
       name: tagName,
       color: colorPicker,
     });
-    setTagInput('');
 
-    return toast.success('Tag criada com sucesso.');
+    setTagInput('');
   }
 
   return (
@@ -43,6 +42,7 @@ export default ({ onTagCreated, onTagIsClicked, onCloseButton }, props) => {
         {!isLoading ? (
           <>
             <div className="inputExternal">
+              <Close onClick={() => onCloseButton()} />
               <div className="inputContainer">
                 <input
                   type="text"

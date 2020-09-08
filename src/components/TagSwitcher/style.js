@@ -72,17 +72,16 @@ export const TagSwitcher = styled.div`
   }
 `;
 export const Close = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 20px;
-  background-color: white;
-  /* border: 1px solid #f1f1f1; */
+  border: 1px solid #ccc;
   position: absolute;
   top: 0px;
-
-  left: 0;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  z-index: 25;
+  right: 0;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
