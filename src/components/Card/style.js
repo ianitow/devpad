@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Card = styled.div`
- 
   display: flex;
   position: relative;
   flex-direction: column;
@@ -62,5 +61,42 @@ export const Card = styled.div`
     top: -8px;
     cursor: pointer;
   }
- 
+`;
+
+export const ButtonsAside = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 50px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-right: 5px;
+  transition: all linear 200ms;
+
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  color: #ccc;
+`;
+
+export const DeleteButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  :hover {
+    color: red;
+  }
+`;
+export const EditButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  :hover {
+    color: orange;
+  }
 `;
