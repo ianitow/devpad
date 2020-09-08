@@ -22,13 +22,14 @@ const PublishTab = () => {
           Cancelar
         </CancelButton>
         <SaveButton
-          onClick={async () => {
+          onClick={() => {
             if (editorState.title.trim().length === 0) {
               toast.error('Título muito pequeno ou inválido.');
               return;
             }
-            await noteThunks.create(dispatch, editorState);
-            history.goBack();
+            noteThunks.create(dispatch, editorState).then(() => {
+              history.goBack();
+            });
           }}
         >
           Salvar

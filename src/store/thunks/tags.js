@@ -2,17 +2,18 @@ import { getAll, addTag } from '../../services/tags';
 import { Creators } from '../ducks/tags';
 
 export const tagThunks = {
-  getAll: (dispatch) => {
+  getAll: async (dispatch) => {
     dispatch(Creators.setLoading(true));
-    getAll().then((tags) => {
+    await getAll().then((tags) => {
       dispatch(Creators.getAll(tags));
       dispatch(Creators.setLoading(false));
     });
   },
-  addTag: (dispatch, payload) => {
-    addTag({ ...payload }).then((response) => {
+  addTag: async (dispatch, payload) => {
+    dispatch(Creators.setLoading(true));
+    await addTag({ ...payload }).then((response) => {
       const { name, color, _id } = response.data;
-
+      dispatch(Creators.setLoading(false));
       dispatch(Creators.add({ _id, name, color }));
     });
   },

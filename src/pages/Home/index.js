@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { noteThunks } from '../../store/thunks/notes';
 import TagFilter from '../../components/TagFilter';
 import CardList from '../../components/CardList';
+import DialogAlert from '../../components/DialogAlert';
 import Search from '../../components/Search/index';
 import { Creators as EditorCreators } from '../../store/ducks/editor';
 
@@ -23,11 +24,14 @@ export const Home = () => {
   }, []);
 
   return (
-    <Container>
-      <Search />
-      <TagFilter />
-      {filtered[0] ? <CardList cards={filtered}></CardList> : 'Nada aqui'}
-    </Container>
+    <>
+      <DialogAlert />
+      <Container>
+        <Search />
+        <TagFilter />
+        {filtered[0] ? <CardList cards={filtered}></CardList> : 'Nada aqui'}
+      </Container>
+    </>
   );
 };
 

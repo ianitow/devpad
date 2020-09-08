@@ -26,10 +26,20 @@ export default ({
               <span className="textModal">{message}</span>
             </div>
             <div className="buttons">
-              <button onClick={() => {}} className="actionOne">
+              <button
+                onClick={() => {
+                  onSubmit();
+                }}
+                className="actionOne"
+              >
                 {buttons[0]}
               </button>
-              <button onClick={onSubmit} className="actionTwo">
+              <button
+                onClick={() => {
+                  onCancel();
+                }}
+                className="actionTwo"
+              >
                 {buttons[1]}
               </button>
             </div>

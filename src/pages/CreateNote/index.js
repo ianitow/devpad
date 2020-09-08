@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Switch from 'react-switch';
-import DialogAlert, { options } from '../../components/DialogAlert';
 import TagSwitcher from '../../components/TagSwitcher';
 import PublishTab from '../../components/PublishTab';
 import { Creators as EditorCreators } from '../../store/ducks/editor';
@@ -16,7 +15,7 @@ import {
 
 //Editor Imports
 
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import Tag from '../../components/Tag';
 import Editor from '../../components/Editor';
@@ -67,9 +66,11 @@ function CreateNote({ add }) {
   }
 
   async function handleTagCreated(payload) {
-    await tagThunks.addTag(dispatch, { ...payload });
+    tagThunks.addTag(dispatch, { ...payload }).then(() => {
+      toast.success('Tag criada com sucesso.');
+    });
 
-    console.log('No create note', allValues);
+    // console.log('No create note', allValues);
   }
   function validateUrl() {
     if (!type) {
@@ -84,14 +85,15 @@ function CreateNote({ add }) {
       if (validateUrl(inputURL)) {
         console.log(editorState);
       } else {
-        toast.error('Você informou uma url inválida.', options);
+        toast.error('Você informou uma url inválida.');
       }
     }
   }
 
   return (
     <>
-      <DialogAlert />
+      <ToastContainer />
+
       <Container>
         <Caption>
           <h2>Nova Anotação</h2>{' '}

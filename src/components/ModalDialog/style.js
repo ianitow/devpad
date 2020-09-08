@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import { TEXT_COLOR_SECONDARY } from '../../styles/GlobalStyles';
 export const Background = styled.div`
   position: absolute;
-  background-color: rgba(190, 190, 190, 0.8);
+  background-color: rgba(255, 255, 255, 0.5);
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 5;
 `;
 export const ModalDialog = styled.div`
+  z-index: 25;
   position: absolute;
   top: 50%;
   position: absolute;
@@ -22,7 +24,7 @@ export const ModalDialog = styled.div`
   justify-content: center;
   width: 290px;
   height: 268px;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
   border-radius: 7px;
   background-color: ${TEXT_COLOR_SECONDARY};
   div.container {
