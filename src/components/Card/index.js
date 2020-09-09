@@ -70,9 +70,6 @@ export default ({ id, title, tags, path }) => {
             <DeleteButton onClick={() => setOpenedModal(true)}>
               <FontAwesomeIcon icon={faTrash} />
             </DeleteButton>
-            <EditButton>
-              <FontAwesomeIcon icon={faEdit} />
-            </EditButton>
           </ButtonsAside>
         </Card>
       </div>

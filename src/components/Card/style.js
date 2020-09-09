@@ -30,7 +30,8 @@ export const Card = styled.div`
     background: ${(props) => (props.gradient ? props.gradient() : 'black')};
   }
 
-  h2 {
+  h2,
+  a {
     display: flex;
     justify-content: flex-start;
     font-weight: bold;
@@ -69,7 +70,7 @@ export const ButtonsAside = styled.div`
   flex-direction: column;
   width: 50px;
   height: 50px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-end;
   padding-right: 5px;
   transition: all linear 200ms;
@@ -88,15 +89,5 @@ export const DeleteButton = styled.div`
   height: 20px;
   :hover {
     color: red;
-  }
-`;
-export const EditButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  :hover {
-    color: orange;
   }
 `;
