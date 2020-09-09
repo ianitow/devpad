@@ -20,7 +20,7 @@ import Undo from 'editorjs-undo';
 import { Container } from './style';
 import { useSelector, useDispatch } from 'react-redux';
 import { Creators as EditorCreators } from '../../store/ducks/editor';
-export default () => {
+export default ({ isLoading }) => {
   const editor = useRef(null);
   const dispatch = useDispatch();
   const [intervalID, setIntervalID] = React.useState();
@@ -33,53 +33,55 @@ export default () => {
   });
   return (
     <Container id="editorjs-container">
-      <Editor
-        ref={editor}
-        data={editorState.content}
-        holder="editorjs-container"
-        placeholder="Comece a escrever algo..."
-        onData={(data) => onDataReceived(data)}
-        tools={{
-          Header,
-          image: {
-            class: SimpleImage,
-            inlineToolbar: true,
-            config: {
-              placeholder: 'Paste image URL',
+      {!isLoading && (
+        <Editor
+          ref={editor}
+          data={editorState.content}
+          holder="editorjs-container"
+          placeholder="Comece a escrever algo..."
+          onData={(data) => onDataReceived(data)}
+          tools={{
+            Header,
+            image: {
+              class: SimpleImage,
+              inlineToolbar: true,
+              config: {
+                placeholder: 'Paste image URL',
+              },
             },
-          },
-          codeBox: {
-            class: Codebox,
-            config: {
-              themeURL:
-                'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', // Optional
-              themeName: 'dracula', // Optional
-              useDefaultTheme: 'dark', // Optional. This also determines the background color of the language select drop-down
+            codeBox: {
+              class: Codebox,
+              config: {
+                themeURL:
+                  'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css', // Optional
+                themeName: 'dracula', // Optional
+                useDefaultTheme: 'dark', // Optional. This also determines the background color of the language select drop-down
+              },
             },
-          },
-          List,
-          Checklist,
-          Embed,
-          Link,
-          InlineCode,
-          Underline,
-          Quote,
-          Delimiter,
-          Marker,
-          Paragraph,
-        }}
-        onReady={() => {
-          setIntervalID(
-            setTimeout(() => {
-              if (editor) {
-                new Undo({ ...editor.current });
-                new DragDrop(editor.current.editor);
-                clearInterval(intervalID);
-              }
-            }, 2000),
-          );
-        }}
-      />
+            List,
+            Checklist,
+            Embed,
+            Link,
+            InlineCode,
+            Underline,
+            Quote,
+            Delimiter,
+            Marker,
+            Paragraph,
+          }}
+          onReady={() => {
+            setIntervalID(
+              setTimeout(() => {
+                if (editor) {
+                  // new Undo({ ...editor.current });
+                  // new DragDrop(editor.current.editor);
+                  // clearInterval(intervalID);
+                }
+              }, 2000),
+            );
+          }}
+        />
+      )}
     </Container>
   );
 };
