@@ -1,7 +1,7 @@
 import React from 'react';
 import TagList from '../TagList';
-import { Card, ButtonsAside, DeleteButton, EditButton } from './style.js';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Card, ButtonsAside, DeleteButton } from './style.js';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ModalDialog from '../ModalDialog';
 import { noteThunks } from '../../store/thunks/notes';
@@ -37,7 +37,6 @@ export default ({ id, title, tags, path }) => {
 
     setOpenedModal(false);
   }
-  function onClickEditCard() {}
 
   return (
     <>
@@ -45,7 +44,7 @@ export default ({ id, title, tags, path }) => {
         message={`Deseja deletar o card: ${title}`}
         icon={faTrash}
         buttons={['OK', 'Cancelar']}
-        title="Teste"
+        title="Confirmar exclusão ?"
         condition={openedModal}
         onCancel={() => {
           setOpenedModal(false);

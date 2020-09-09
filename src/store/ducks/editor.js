@@ -29,10 +29,10 @@ export const Creators = {
     };
   },
 
-  SET_NOTE: ({ title, tags, isRedirect, url, content }) => {
+  SET_NOTE: ({ _id, title, tags, isRedirect, url, content }) => {
     return {
       type: Types.SET_NOTE,
-      payload: { title, tags, isRedirect, url, content },
+      payload: { title, tags, isRedirect, url, content, _id },
     };
   },
 };

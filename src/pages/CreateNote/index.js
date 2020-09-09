@@ -191,7 +191,7 @@ function CreateNote({ add }) {
           <>{!isVisibleTag && <Editor />}</>
         )}
       </Container>
-      <PublishTab />
+      <PublishTab isCreating />
     </>
   );
 }

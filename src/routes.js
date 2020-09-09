@@ -28,9 +28,9 @@ const Routes = () => (
     <Route
       path="/view/:path"
       component={() => (
-        <Layout name="Ver anotação" to="/edit" icon="edit">
+        <WithoutFooter name="Ver anotação" to="/edit" icon="edit">
           <ViewNote />
-        </Layout>
+        </WithoutFooter>
       )}
     />
 

@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Creators as EditorCreatos } from '../../store/ducks/editor';
 // import Editor from '@stfy/react-editor.js';
 import Editor from '../../components/Editor';
+import PublishTab from '../../components/PublishTab';
 function ViewNote() {
   const { path } = useParams();
   const dispatch = useDispatch();
@@ -18,8 +19,9 @@ function ViewNote() {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await Note.view(path);
-
+      console.log('result', result);
       dispatch(EditorCreatos.SET_NOTE({ ...result }));
+
       setIsLoading(false);
     };
     fetchData();
@@ -32,6 +34,7 @@ function ViewNote() {
         <TagList tags={editorState.tags} clickable />
         <Editor isLoading={isLoading} />
       </Container>
+      <PublishTab isCreating={false} />
     </>
   );
 }
